@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">spedox-mobile</string>
+    <string name="text_email_field">E-mail</string>
+    <string name="text_password_field">Password</string>
+    <string name="button_login">Login</string>
+
+</resources>
