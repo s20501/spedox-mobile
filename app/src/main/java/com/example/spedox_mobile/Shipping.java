@@ -14,6 +14,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import java.util.List;
+
 public class Shipping extends AppCompatActivity {
 
     Retrofit retrofit = ApiManager.getRetrofitInstance();
@@ -28,15 +30,16 @@ public class Shipping extends AppCompatActivity {
     }
 
     private void getAllShipments(){
-        Call<ShipmentModel> call = shippingService.getAllShipments(getToken());
-        call.enqueue(new Callback<ShipmentModel>() {
+        Call<List<ShipmentModel>> call = shippingService.getAllShipments(getToken());
+        call.enqueue(new Callback<List<ShipmentModel>>() {
             @Override
-            public void onResponse(Call<ShipmentModel> call, Response<ShipmentModel> response) {
-
+            public void onResponse(Call<List<ShipmentModel>> call, Response<List<ShipmentModel>> response) {
+                List<ShipmentModel> shipmentList = response.body();
+                System.out.println(shipmentList);
             }
 
             @Override
-            public void onFailure(Call<ShipmentModel> call, Throwable t) {
+            public void onFailure(Call<List<ShipmentModel>> call, Throwable t) {
 
             }
         });
