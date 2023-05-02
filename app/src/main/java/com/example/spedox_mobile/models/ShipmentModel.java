@@ -12,5 +12,8 @@ public class ShipmentModel {
         return blNumber;
     }
 
-
+    public ShipmentModel(String id, String blNumber) {
+        this.id = id;
+        this.blNumber = blNumber;
+    }
 }
