@@ -1,8 +1,12 @@
 package com.example.spedox_mobile;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.spedox_mobile.models.AuthTokenResponse;
@@ -32,41 +36,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        emailField = (EditText) findViewById(R.id.text_email_field);
+        passwordField = (EditText) findViewById(R.id.text_password_field);
+        loginButton = (Button) findViewById(R.id.button_login);
+
         addListenerOnClick();
     }
 
 
     private void login(String email, String password) {
-
         LoginModel loginModel = new LoginModel(email, password);
         Call<AuthTokenResponse> call = loginService.login(loginModel);
+
         call.enqueue(new Callback<AuthTokenResponse>() {
             @Override
             public void onResponse(Call<AuthTokenResponse> call, Response<AuthTokenResponse> response) {
                 if (response.isSuccessful()) {
-                    System.out.println("login successful");
+                    saveToken(response.body().getAccessToken());
+                    System.out.println(response.body().getAccessToken());
+                    Toast.makeText(getApplicationContext(), "Logowanie powiodlo sie", Toast.LENGTH_SHORT).show();
                 } else {
                     System.out.println(response.errorBody().toString());
-                    System.out.println("login not successful");
+                    Toast.makeText(getApplicationContext(), "Logowanie nie powiodlo sie", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<AuthTokenResponse> call, Throwable t) {
-                System.out.println(t);
-                System.out.println("failure");
+                Log.i("LOGIN", t.toString());
             }
         });
 
     }
 
     public void addListenerOnClick() {
-        emailField = (EditText) findViewById(R.id.text_email_field);
-        passwordField = (EditText) findViewById(R.id.text_password_field);
-        loginButton = (Button) findViewById(R.id.button_login);
-
         loginButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 login(emailField.getText().toString(), passwordField.getText().toString());
@@ -74,5 +78,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //szymon17@gmail.com szymon17 -- data for login
+    public void saveToken(String token){
+        SharedPreferences preferences = getSharedPreferences("MY_APP_PREFS", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("AUTH_TOKEN", token);
+        editor.apply();
+    }
 }
