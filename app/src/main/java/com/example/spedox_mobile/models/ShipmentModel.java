@@ -3,23 +3,24 @@ package com.example.spedox_mobile.models;
 import com.google.gson.annotations.SerializedName;
 
 public class ShipmentModel {
-    @SerializedName("id")
-    private String id;
+
+    @SerializedName("status")
+    private String status;
 
     @SerializedName("blNumber")
     private String blNumber;
 
 
-    public String getId() {
-        return id;
-    }
-
     public String getBlNumber() {
         return blNumber;
     }
 
-    public ShipmentModel(String id, String blNumber) {
-        this.id = id;
+    public String getStatus() {
+        return status;
+    }
+
+    public ShipmentModel(String status, String blNumber) {
+        this.status = status;
         this.blNumber = blNumber;
     }
 }
