@@ -1,8 +1,14 @@
 package com.example.spedox_mobile.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ShipmentModel {
+    @SerializedName("id")
     private String id;
+
+    @SerializedName("blNumber")
     private String blNumber;
+
 
     public String getId() {
         return id;

@@ -2,6 +2,7 @@ package com.example.spedox_mobile;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.spedox_mobile.conf.ApiManager;
@@ -12,6 +13,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Shipping extends AppCompatActivity {
@@ -33,16 +35,21 @@ public class Shipping extends AppCompatActivity {
         call.enqueue(new Callback<List<ShipmentModel>>() {
             @Override
             public void onResponse(Call<List<ShipmentModel>> call, Response<List<ShipmentModel>> response) {
-                System.out.println(response.errorBody());
-                System.out.println(response.code());
-                System.out.println(response.isSuccessful());
+                Log.i("SHIPPING", response.errorBody() + " " + response.code());
 
-             if (response.isSuccessful()){
-                 List<ShipmentModel> shipmentList = response.body();
-                 System.out.println(shipmentList);
-             }else
-                 System.out.println("else statement ");
+                if (response.isSuccessful()) {
+                    List<ShipmentModel> originalList = response.body();
+                    List<String> newList = new ArrayList<>();
 
+                    for (ShipmentModel model : originalList) {
+                        String data = model.getId() + " " + model.getBlNumber();
+                        newList.add(data);
+                        System.out.println(newList);
+                    }
+
+
+                } else
+                    System.out.println("else statement ");
             }
             @Override
             public void onFailure(Call<List<ShipmentModel>> call, Throwable t) {

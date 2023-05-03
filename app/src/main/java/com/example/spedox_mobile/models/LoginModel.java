@@ -1,6 +1,7 @@
 package com.example.spedox_mobile.models;
 
 public class LoginModel {
+
     private String userName;
     private String password;
 
