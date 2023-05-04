@@ -54,7 +54,7 @@ public class Login extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), "Logowanie powiodlo sie", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(getApplicationContext(), Shipping.class);
+                    Intent intent = new Intent(getApplicationContext(), Shipment.class);
                     startActivity(intent);
 
                 } else

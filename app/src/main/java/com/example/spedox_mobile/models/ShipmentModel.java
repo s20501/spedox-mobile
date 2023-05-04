@@ -1,11 +1,14 @@
 package com.example.spedox_mobile.models;
 
+import com.example.spedox_mobile.enums.ShipmentStatusEnum;
 import com.google.gson.annotations.SerializedName;
 
-public class ShipmentModel {
+import java.io.Serializable;
+
+public class ShipmentModel implements Serializable {
 
     @SerializedName("status")
-    private String status;
+    private ShipmentStatusEnum status;
 
     @SerializedName("blNumber")
     private String blNumber;
@@ -15,11 +18,11 @@ public class ShipmentModel {
         return blNumber;
     }
 
-    public String getStatus() {
+    public ShipmentStatusEnum getStatus() {
         return status;
     }
 
-    public ShipmentModel(String status, String blNumber) {
+    public ShipmentModel(ShipmentStatusEnum status, String blNumber) {
         this.status = status;
         this.blNumber = blNumber;
     }

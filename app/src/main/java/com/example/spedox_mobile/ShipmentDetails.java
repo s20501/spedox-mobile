@@ -3,13 +3,11 @@ package com.example.spedox_mobile;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ShipmentItem extends AppCompatActivity {
+public class ShipmentDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shipment_item);
+        setContentView(R.layout.activity_shipments_details);
     }
-
-
 }
