@@ -6,10 +6,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ShipmentDetails">
-
-    <Button
-            android:text="Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button" tools:layout_editor_absoluteY="203dp"
-            tools:layout_editor_absoluteX="177dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="129dp"
+            android:layout_height="23dp" android:id="@+id/client_name"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="21dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="129dp"
+            android:layout_height="23dp" android:id="@+id/type"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="102dp" app:layout_constraintStart_toEndOf="@+id/client_name"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

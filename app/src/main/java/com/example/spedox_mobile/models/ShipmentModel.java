@@ -13,17 +13,24 @@ public class ShipmentModel implements Serializable {
     @SerializedName("blNumber")
     private String blNumber;
 
-
-    public String getBlNumber() {
-        return blNumber;
-    }
+    @SerializedName("shipper")
+    private ClientModel clientModel;
 
     public ShipmentStatusEnum getStatus() {
         return status;
     }
 
-    public ShipmentModel(ShipmentStatusEnum status, String blNumber) {
+    public String getBlNumber() {
+        return blNumber;
+    }
+
+    public ClientModel getClientModel() {
+        return clientModel;
+    }
+
+    public ShipmentModel(ShipmentStatusEnum status, String blNumber, ClientModel clientModel) {
         this.status = status;
         this.blNumber = blNumber;
+        this.clientModel = clientModel;
     }
 }

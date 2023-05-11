@@ -16,28 +16,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-            android:id="@+id/shipment_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true" tools:ignore="MissingConstraints">
-
-        <TextView
-                android:id="@+id/shipment_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-                android:id="@+id/bl_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

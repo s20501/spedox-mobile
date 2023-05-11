@@ -12,9 +12,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
+            android:text="TextView"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content" android:id="@+id/customer_name"/>
+    <TextView
 
             android:id="@+id/shipment_status"
-            android:layout_width="match_parent"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 </LinearLayout>

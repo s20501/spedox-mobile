@@ -32,6 +32,9 @@ public class ShipmentAdapter extends ArrayAdapter<ShipmentModel> {
         TextView blNumber = convertView.findViewById(R.id.bl_number);
         blNumber.setText(shipment.getBlNumber());
 
+        TextView clientName = convertView.findViewById(R.id.customer_name);
+        clientName.setText(shipment.getClientModel().getName());
+
         return convertView;
     }
 }
