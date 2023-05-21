@@ -50,7 +50,6 @@ public class Shipment extends AppCompatActivity {
                     ShipmentAdapter adapter = new ShipmentAdapter(Shipment.this, R.layout.shipment_item, originalList);
                     listView.setAdapter(adapter);
 
-
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
