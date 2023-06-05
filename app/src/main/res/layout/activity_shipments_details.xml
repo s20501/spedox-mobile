@@ -6,27 +6,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ShipmentDetails">
+
     <TextView
-            android:text="Klient"
-            android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/client_name_detail2"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="96dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="36dp"/>
+        android:id="@+id/client_name_detail2"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="96dp"
+        android:text="Klient"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-            android:text="ICOTERM"
-            android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/Icoterm"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="176dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="36dp"/>
+        android:id="@+id/Icoterm"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="176dp"
+        android:text="ICOTERM"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-            android:text="Załadowca"
-            android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/shipper"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="176dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="280dp"/>
+        android:id="@+id/shipper"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="176dp"
+        android:text="Załadowca"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
             android:text="placeholder"
             android:layout_width="129dp"
@@ -41,20 +53,28 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="352dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="36dp"/>
+
     <TextView
-            android:text="Data załadunku"
-            android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/loadingdate"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="328dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="36dp"/>
+        android:id="@+id/loadingdate"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="328dp"
+        android:text="Data załadunku"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-            android:text="Port wyładunku"
-            android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/port_of_destination"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="404dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="36dp"/>
+        android:id="@+id/port_of_destination"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="404dp"
+        android:text="Port wyładunku"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
             android:text="placeholder"
             android:layout_width="129dp"
@@ -69,20 +89,28 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="36dp" android:layout_marginTop="496dp"/>
+
     <TextView
-            android:text="Przewidywana data wył."
-            android:layout_width="157dp"
-            android:layout_height="23dp" android:id="@+id/placeholder10"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="472dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="36dp"/>
+        android:id="@+id/placeholder10"
+        android:layout_width="157dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="472dp"
+        android:text="Przewidywana data wył."
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-            android:text="Port załadunku"
-            android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/portOfLoading"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="252dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="36dp"/>
+        android:id="@+id/portOfLoading"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="252dp"
+        android:text="Port załadunku"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
             android:text="placeholder"
             android:layout_width="129dp"
@@ -97,13 +125,17 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="276dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="280dp"/>
+
     <TextView
-            android:text="Ubezpieczenie"
-            android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/insurance"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="328dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="280dp"/>
+        android:id="@+id/insurance"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="328dp"
+        android:text="Ubezpieczenie"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
             android:text="placeholder"
             android:layout_width="129dp"
@@ -111,13 +143,17 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="352dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="280dp"/>
+
     <TextView
-            android:text="Odbiorca"
-            android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/consignee"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="252dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="280dp"/>
+        android:id="@+id/consignee"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="252dp"
+        android:text="Odbiorca"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
             android:text="TextView"
             android:layout_width="129dp"
@@ -139,6 +175,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="96dp"
             android:hint="Typ"
+            android:textStyle="bold"
             android:layout_marginStart="116dp" app:layout_constraintStart_toEndOf="@+id/client_name_detail"/>
     <TextView
             android:text="TextView"
@@ -154,12 +191,18 @@
             app:layout_constraintTop_toBottomOf="@+id/bl_number" android:layout_marginEnd="188dp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent" android:textSize="20sp"/>
+
     <TextView
-            android:text="BL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/bl_number"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="26dp" android:layout_marginEnd="212dp" app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@+id/bl_number_details" android:textSize="20sp"/>
+        android:id="@+id/bl_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="212dp"
+        android:gravity="center"
+        android:text="BL"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bl_number_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
