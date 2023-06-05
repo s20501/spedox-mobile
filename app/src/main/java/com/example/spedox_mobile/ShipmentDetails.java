@@ -37,8 +37,7 @@ public class ShipmentDetails extends AppCompatActivity {
         portOfLoadingDetails.setText(selectedShipment.getPortOfLoading());
         portOfDestination.setText(selectedShipment.getPortOfDestination());
         insurance.setText(selectedShipment.getValue() + " " + selectedShipment.getValueCurrency());
-        consignee.setText(selectedShipment.getConsignee().getName());
-        shipper.setText(selectedShipment.getShipper().getName());
+
 
         System.out.println(selectedShipment.getLoadingDate().toString());
 

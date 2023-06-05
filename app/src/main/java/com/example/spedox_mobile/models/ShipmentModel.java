@@ -36,18 +36,9 @@ public class ShipmentModel implements Serializable {
     @SerializedName("portOfDestination")
     private String portOfDestination;
 
+   // private ClientModel shipper;
 
-    private ClientModel shipper;
-
-    public ClientModel getShipper() {
-        return shipper;
-    }
-
-    public ClientModel getConsignee() {
-        return consignee;
-    }
-
-    private ClientModel consignee;
+   // private ClientModel consignee;
 
     private Date destinationDate;
 
@@ -121,8 +112,6 @@ public class ShipmentModel implements Serializable {
         this.portOfLoading = portOfLoading;
         this.loadingDate = loadingDate;
         this.portOfDestination = portOfDestination;
-        this.shipper = shipper;
-        this.consignee = consignee;
         this.destinationDate = destinationDate;
         this.type = type;
         this.value = value;
