@@ -4,9 +4,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.spedox_mobile.models.ShipmentModel;
-import org.w3c.dom.Text;
-
-import java.util.Date;
 
 public class ShipmentDetails extends AppCompatActivity {
 
@@ -17,7 +14,7 @@ public class ShipmentDetails extends AppCompatActivity {
         setContentView(R.layout.activity_shipments_details);
 
         TextView customerName = findViewById(R.id.client_name_detail);
-        TextView type = findViewById(R.id.type_detail);
+        TextView status = findViewById(R.id.status_detail);
         TextView icotermDetails = findViewById(R.id.icoterm_detail);
         TextView blNumberDetails = findViewById(R.id.bl_number_details);
         TextView portOfLoadingDetails = findViewById(R.id.portOfLoading_detail);
@@ -31,7 +28,9 @@ public class ShipmentDetails extends AppCompatActivity {
         ShipmentModel selectedShipment = (ShipmentModel) getIntent().getSerializableExtra("selectedShipment");
 
         customerName.setText(selectedShipment.getClientModel().getName());
-        type.setText(selectedShipment.getStatus().status.toUpperCase());
+        shipper.setText(selectedShipment.getShipper().getName());
+        consignee.setText(selectedShipment.getConsignee().getName());
+        status.setText(selectedShipment.getStatus().status.toUpperCase());
         icotermDetails.setText(selectedShipment.getIcoterms().icoTermenum.toUpperCase());
         blNumberDetails.setText(selectedShipment.getBlNumber());
         portOfLoadingDetails.setText(selectedShipment.getPortOfLoading());

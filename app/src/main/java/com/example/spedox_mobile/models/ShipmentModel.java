@@ -17,8 +17,14 @@ public class ShipmentModel implements Serializable {
     @SerializedName("blNumber")
     private String blNumber;
 
-    @SerializedName("shipper")
+    @SerializedName("client")
     private ClientModel clientModel;
+
+    @SerializedName("shipper")
+    private ClientModel shipper;
+
+    @SerializedName("consignee")
+    private ClientModel consignee;
 
     @SerializedName("direction")
     private ShipmentDirectionEnum direction;
@@ -36,9 +42,7 @@ public class ShipmentModel implements Serializable {
     @SerializedName("portOfDestination")
     private String portOfDestination;
 
-   // private ClientModel shipper;
 
-   // private ClientModel consignee;
 
     private Date destinationDate;
 
@@ -60,6 +64,14 @@ public class ShipmentModel implements Serializable {
 
     public ClientModel getClientModel() {
         return clientModel;
+    }
+
+    public ClientModel getConsignee() {
+        return consignee;
+    }
+
+    public ClientModel getShipper() {
+        return shipper;
     }
 
     public IcotermsEnum getIcoterms() {
@@ -117,5 +129,7 @@ public class ShipmentModel implements Serializable {
         this.value = value;
         this.valueCurrency = valueCurrency;
         this.insurance = insurance;
+        this.shipper = shipper;
+        this.consignee = consignee;
     }
 }

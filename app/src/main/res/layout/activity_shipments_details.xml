@@ -164,19 +164,22 @@
     <TextView
             android:text="TextView"
             android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/type_detail"
+            android:layout_height="23dp" android:id="@+id/status_detail"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="120dp"
             android:layout_marginStart="116dp" app:layout_constraintStart_toEndOf="@+id/client_name_detail"/>
+
     <TextView
-            android:text="Typ"
-            android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/type"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="96dp"
-            android:hint="Typ"
-            android:textStyle="bold"
-            android:layout_marginStart="116dp" app:layout_constraintStart_toEndOf="@+id/client_name_detail"/>
+        android:id="@+id/type"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="96dp"
+        android:hint="Typ"
+        android:text="Status"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/client_name_detail"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
             android:text="TextView"
             android:layout_width="129dp"
