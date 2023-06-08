@@ -85,7 +85,7 @@
     <TextView
             android:text="placeholder"
             android:layout_width="129dp"
-            android:layout_height="23dp" android:id="@+id/placeholder11"
+            android:layout_height="23dp" android:id="@+id/destination_date_detail"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="36dp" android:layout_marginTop="496dp"/>
@@ -205,9 +205,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
-        android:layout_marginEnd="192dp"
+        android:layout_marginEnd="164dp"
         android:gravity="center"
-        android:text="BL"
+        android:text="Numer B/L"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bl_number_details"

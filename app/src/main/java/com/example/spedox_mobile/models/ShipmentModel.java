@@ -43,7 +43,7 @@ public class ShipmentModel implements Serializable {
     private String portOfDestination;
 
 
-
+    @SerializedName("destinationDate")
     private Date destinationDate;
 
     private ShipmentTypeEnum type;
