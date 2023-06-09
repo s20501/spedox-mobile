@@ -8,8 +8,15 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ShipmentModel implements Serializable {
+
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("documents")
+    private List<DocumentModel> documents;
 
     @SerializedName("status")
     private ShipmentStatusEnum status;
@@ -53,6 +60,10 @@ public class ShipmentModel implements Serializable {
     private String valueCurrency;
 
     private boolean insurance;
+
+    public List<DocumentModel> getDocuments() {
+        return documents;
+    }
 
     public ShipmentStatusEnum getStatus() {
         return status;
@@ -114,11 +125,19 @@ public class ShipmentModel implements Serializable {
         return insurance;
     }
 
+    public String getId() {
+        return id;
+    }
 
-    public ShipmentModel(ShipmentStatusEnum status, String blNumber, ClientModel clientModel, ShipmentDirectionEnum direction, IcotermsEnum icoterms, String portOfLoading, Date loadingDate, String portOfDestination, ClientModel shipper, ClientModel consignee, Date destinationDate, ShipmentTypeEnum type, String value, String valueCurrency, boolean insurance) {
+
+    public ShipmentModel(String id, List<DocumentModel> documents, ShipmentStatusEnum status, String blNumber, ClientModel clientModel, ClientModel shipper, ClientModel consignee, ShipmentDirectionEnum direction, IcotermsEnum icoterms, String portOfLoading, Date loadingDate, String portOfDestination, Date destinationDate, ShipmentTypeEnum type, String value, String valueCurrency, boolean insurance) {
+        this.id = id;
+        this.documents = documents;
         this.status = status;
         this.blNumber = blNumber;
         this.clientModel = clientModel;
+        this.shipper = shipper;
+        this.consignee = consignee;
         this.direction = direction;
         this.icoterms = icoterms;
         this.portOfLoading = portOfLoading;
@@ -129,7 +148,5 @@ public class ShipmentModel implements Serializable {
         this.value = value;
         this.valueCurrency = valueCurrency;
         this.insurance = insurance;
-        this.shipper = shipper;
-        this.consignee = consignee;
     }
 }

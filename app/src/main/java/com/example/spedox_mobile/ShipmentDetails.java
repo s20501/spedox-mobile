@@ -1,7 +1,10 @@
 package com.example.spedox_mobile;
 
+import android.content.Intent;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,9 +49,21 @@ public class ShipmentDetails extends AppCompatActivity {
         dateOfLoading.setText(df.format(selectedShipment.getLoadingDate()));
         dateOfDestination.setText(df.format(selectedShipment.getDestinationDate()));
 
-
+        Button navToDocuments = findViewById(R.id.documents_button);
 
         System.out.println(selectedShipment.getLoadingDate().toString());
 
+        View.OnClickListener btnClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShipmentDetails.this, Documents.class);
+                intent.putExtra("selectedShipment", selectedShipment);
+                System.out.println(selectedShipment.getId());
+                System.out.println(selectedShipment.getDocuments().get(0).getFileName());
+                startActivity(intent);
+            }
+        };
+        navToDocuments.setOnClickListener(btnClick);
     }
+
 }

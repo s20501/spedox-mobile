@@ -4,4 +4,6 @@
     <string name="text_password_field">Password</string>
     <string name="button_login">Login</string>
     <string name="type">Typ</string>
+    <string name="photo_view">Dodaj dokument</string>
+    <string name="title_activity_documents">Documents</string>
 </resources>
