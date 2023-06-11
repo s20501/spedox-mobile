@@ -58,8 +58,6 @@ public class ShipmentDetails extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ShipmentDetails.this, Documents.class);
                 intent.putExtra("selectedShipment", selectedShipment);
-                System.out.println(selectedShipment.getId());
-                System.out.println(selectedShipment.getDocuments().get(0).getFileName());
                 startActivity(intent);
             }
         };
