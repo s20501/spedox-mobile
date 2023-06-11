@@ -7,4 +7,5 @@
     <string name="photo_view">Dodaj dokument</string>
     <string name="title_activity_documents">Documents</string>
     <string name="gallery_activate">Dodaj dokument</string>
+    <string name="select_image">Wybierz zdjęcie</string>
 </resources>

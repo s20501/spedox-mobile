@@ -13,4 +13,19 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="40dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="119dp" android:layout_marginEnd="41dp" app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+            android:text="@string/select_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/image_select"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="selectImageFromGallery"
+            android:layout_marginStart="120dp" android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/photo_name"/>
+    <TextView
+            android:layout_width="200dp"
+            android:layout_height="40dp" android:id="@+id/photo_name"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/spinner" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="105dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
