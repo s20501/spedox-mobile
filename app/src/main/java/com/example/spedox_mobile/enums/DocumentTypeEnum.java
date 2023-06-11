@@ -1,5 +1,7 @@
 package com.example.spedox_mobile.enums;
 
+import org.w3c.dom.DocumentType;
+
 public enum DocumentTypeEnum {
     INVOICE("Faktura"),
     PACKING_LIST("List przewozowy"),
@@ -19,5 +21,9 @@ public enum DocumentTypeEnum {
 
     public String getValue() {
         return value;
+    }
+
+    public static DocumentTypeEnum[] getAllValues() {
+        return values();
     }
 }

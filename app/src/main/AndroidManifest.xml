@@ -15,6 +15,13 @@
             android:theme="@style/Theme.Spedoxmobile"
             tools:targetApi="31">
         <activity
+                android:name=".NewDocument"
+                android:exported="false">
+            <meta-data
+                    android:name="android.app.lib_name"
+                    android:value=""/>
+        </activity>
+        <activity
                 android:name=".DocumentItem"
                 android:exported="false">
             <meta-data

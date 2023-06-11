@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ public class Documents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_documents);
+
+        Button addDocumentButton = findViewById(R.id.new_document);
 
         ShipmentModel selectedShipment = (ShipmentModel) getIntent().getSerializableExtra("selectedShipment");
 
@@ -41,6 +44,15 @@ public class Documents extends AppCompatActivity {
                 // Pobierz kliknięty element z listy i przekaż do nowego widoku
                 DocumentModel selectedShipment = documents.get(position);
                 System.out.println("item clicked on positon" + position);
+            }
+        });
+
+        addDocumentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Documents.this, NewDocument.class);
+                intent.putExtra("selectedShipment", selectedShipment);
+                startActivity(intent);
             }
         });
     }
