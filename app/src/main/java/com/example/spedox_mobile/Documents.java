@@ -1,6 +1,9 @@
 package com.example.spedox_mobile;
 
 import android.content.Intent;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,5 +34,14 @@ public class Documents extends AppCompatActivity {
         documentsListView.setAdapter(documentsAdapter);
 
 
+        // pomocnicza metoda
+        documentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Pobierz kliknięty element z listy i przekaż do nowego widoku
+                DocumentModel selectedShipment = documents.get(position);
+                System.out.println("item clicked on positon" + position);
+            }
+        });
     }
 }
