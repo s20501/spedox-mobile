@@ -1,6 +1,9 @@
 package com.example.spedox_mobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
@@ -10,8 +13,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.spedox_mobile.conf.ApiManager;
 import com.example.spedox_mobile.enums.DocumentTypeEnum;
+import com.example.spedox_mobile.models.DocumentRestModel;
+import com.example.spedox_mobile.models.ShipmentModel;
+import com.example.spedox_mobile.services.DocumentServiceApi;
 import org.apache.commons.io.FilenameUtils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+import java.io.File;
+import java.security.Principal;
+import java.util.UUID;
 
 public class NewDocument extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -20,10 +35,16 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
     private ArrayAdapter<String> spinnerAdapter;
     private TextView photoName;
 
+    private ShipmentModel selectedShipment;
+    private DocumentServiceApi documentService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_document);
+
+        Retrofit retrofit = ApiManager.getRetrofitInstance();
+        documentService = retrofit.create(DocumentServiceApi.class);
 
         photoName = findViewById(R.id.photo_name);
 
@@ -49,7 +70,6 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         selectedValue = (String) parent.getItemAtPosition(position);
-
     }
 
     @Override
@@ -61,12 +81,50 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        ShipmentModel selectedShipment = (ShipmentModel) getIntent().getSerializableExtra("selectedShipment");
+
         if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImageUri = data.getData();
-            System.out.println(selectedValue);
-            System.out.println(getFileNameFromUri(selectedImageUri));
-            photoName.setText(getFileNameFromUri(selectedImageUri).toString());
 
+            String selectedShipmentId = selectedShipment.getId();
+            //DocumentTypeEnum selectedDocumentType = DocumentTypeEnum.valueOf(selectedValue);
+            String selectedValue = "INVOICE";
+            File file = new File(getRealPathFromUri(selectedImageUri));
+
+            DocumentRestModel documentRestModel = new DocumentRestModel(
+                    UUID.randomUUID().toString(),
+                    selectedValue,
+                    selectedShipmentId,
+                    file
+            );
+
+
+
+
+            Call<String> call = documentService.addDocument(documentRestModel, "Bearer " + getToken());
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        String result = response.body();
+                        System.out.println(result);
+                    } else {
+                        System.out.println(documentRestModel.getShipmentId());
+                        System.out.println(documentRestModel.getFile().toString());
+
+                        System.out.println();
+                        System.out.println(response.code());
+                        System.out.println(response.body());
+                        System.out.println(response.errorBody().toString());
+                        System.out.println("else: " + response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    System.out.println(t.getMessage().toString());
+                }
+            });
         }
     }
 
@@ -80,6 +138,27 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
         String fileName = FilenameUtils.getName(filePath);
         return fileName;
     }
+
+    private String getToken() {
+        SharedPreferences preferences = getSharedPreferences("MY_APP_PREFS", Context.MODE_PRIVATE);
+        return preferences.getString("AUTH_TOKEN", null);
+    }
+
+    private String getRealPathFromUri(Uri uri) {
+        String filePath = null;
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            if (cursor.moveToFirst()) {
+                filePath = cursor.getString(columnIndex);
+            }
+            cursor.close();
+        }
+        return filePath;
+    }
+
+
 
 
 }

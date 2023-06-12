@@ -38,8 +38,8 @@ public class ShipmentDetails extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
         customerName.setText(selectedShipment.getClientModel().getName());
-        shipper.setText(selectedShipment.getShipper().getName());
-        consignee.setText(selectedShipment.getConsignee().getName());
+//        shipper.setText(selectedShipment.getShipper().getName());
+//        consignee.setText(selectedShipment.getConsignee().getName());
         status.setText(selectedShipment.getStatus().status.toUpperCase());
         icotermDetails.setText(selectedShipment.getIcoterms().icoTermenum.toUpperCase());
         blNumberDetails.setText(selectedShipment.getBlNumber());

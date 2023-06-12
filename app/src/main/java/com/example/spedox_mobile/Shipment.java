@@ -28,14 +28,12 @@ public class Shipment extends AppCompatActivity {
     Retrofit retrofit = ApiManager.getRetrofitInstance();
     ShippingServiceApi shippingService = retrofit.create(ShippingServiceApi.class);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipping);
         listView = findViewById(R.id.list_shipment);
         getAllShipments();
-        //getDetalisOnClick();
 
     }
 
@@ -80,7 +78,7 @@ public class Shipment extends AppCompatActivity {
 
 
 
-        private String getToken () {
+        private String getToken() {
             SharedPreferences preferences = getSharedPreferences("MY_APP_PREFS", Context.MODE_PRIVATE);
             return preferences.getString("AUTH_TOKEN", null);
         }
