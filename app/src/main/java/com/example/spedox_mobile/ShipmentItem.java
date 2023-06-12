@@ -1,13 +1,20 @@
 package com.example.spedox_mobile;
 
-import android.content.Intent;
-import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.spedox_mobile.models.ShipmentModel;
+/**
 
+ Represents an activity for displaying a single shipment item.
+ Extends the AppCompatActivity class.
+ */
 public class ShipmentItem extends AppCompatActivity {
-
+    /**
+     * Called when the activity is created.
+     * Initializes the activity and sets the content view to the layout resource file.
+     *
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
