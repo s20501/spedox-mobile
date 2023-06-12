@@ -74,4 +74,7 @@ public class DocumentRestModel {
         this.shipmentId = shipmentId;
         this.file = file;
     }
+
+    public DocumentRestModel(){
+    }
 }

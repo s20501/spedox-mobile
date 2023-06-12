@@ -19,6 +19,10 @@ import com.example.spedox_mobile.models.DocumentRestModel;
 import com.example.spedox_mobile.models.ShipmentModel;
 import com.example.spedox_mobile.services.DocumentServiceApi;
 import org.apache.commons.io.FilenameUtils;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,17 +95,19 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
             String selectedValue = "INVOICE";
             File file = new File(getRealPathFromUri(selectedImageUri));
 
-            DocumentRestModel documentRestModel = new DocumentRestModel(
-                    UUID.randomUUID().toString(),
-                    selectedValue,
-                    selectedShipmentId,
-                    file
-            );
+            DocumentRestModel documentRestModel = new DocumentRestModel();
 
+            documentRestModel.setFile(file);
+            documentRestModel.setShipmentId(selectedShipmentId);
+            documentRestModel.setType(selectedValue);
 
+            RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(selectedImageUri)), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+            RequestBody shipmentId = RequestBody.create(MediaType.parse("text/plain"), selectedShipmentId);
+            RequestBody type = RequestBody.create(MediaType.parse("text/plain"), selectedValue);
 
+            Call<String> call = documentService.addDocument(body, shipmentId, type, "Bearer " + getToken());
 
-            Call<String> call = documentService.addDocument(documentRestModel, "Bearer " + getToken());
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
