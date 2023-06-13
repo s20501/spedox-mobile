@@ -18,8 +18,6 @@ import com.example.spedox_mobile.enums.DocumentTypeEnum;
 import com.example.spedox_mobile.models.DocumentRestModel;
 import com.example.spedox_mobile.models.ShipmentModel;
 import com.example.spedox_mobile.services.DocumentServiceApi;
-import org.apache.commons.io.FilenameUtils;
-
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -27,10 +25,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
 import java.io.File;
-import java.security.Principal;
-import java.util.UUID;
+
 
 public class NewDocument extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -73,7 +69,8 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        selectedValue = (String) parent.getItemAtPosition(position);
+        selectedValue = DocumentTypeEnum.values()[position].toString();
+        //selectedValue = (String) parent.getItemAtPosition(position);
     }
 
     @Override
@@ -92,7 +89,7 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
 
             String selectedShipmentId = selectedShipment.getId();
             //DocumentTypeEnum selectedDocumentType = DocumentTypeEnum.valueOf(selectedValue);
-            String selectedValue = "INVOICE";
+            //String selectedValue = "INVOICE";
             File file = new File(getRealPathFromUri(selectedImageUri));
 
             DocumentRestModel documentRestModel = new DocumentRestModel();
@@ -117,15 +114,10 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
                     } else {
                         System.out.println(documentRestModel.getShipmentId());
                         System.out.println(documentRestModel.getFile().toString());
-
                         System.out.println();
                         System.out.println(response.code());
-                        System.out.println(response.body());
-                        System.out.println(response.errorBody().toString());
-                        System.out.println("else: " + response.message());
                     }
                 }
-
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     System.out.println(t.getMessage().toString());
@@ -137,13 +129,9 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
     public void selectImageFromGallery(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+
     }
 
-    private String getFileNameFromUri(Uri uri) {
-        String filePath = uri.getPath();
-        String fileName = FilenameUtils.getName(filePath);
-        return fileName;
-    }
 
     private String getToken() {
         SharedPreferences preferences = getSharedPreferences("MY_APP_PREFS", Context.MODE_PRIVATE);
