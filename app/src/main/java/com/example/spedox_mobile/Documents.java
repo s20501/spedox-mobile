@@ -1,5 +1,7 @@
 
 package com.example.spedox_mobile;
+
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,12 +10,10 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.spedox_mobile.adapters.DocumentAdapter;
-import com.example.spedox_mobile.conf.ApiManager;
 import com.example.spedox_mobile.models.DocumentModel;
 import com.example.spedox_mobile.models.ShipmentModel;
-import retrofit2.Retrofit;
-import java.util.List;
 
+import java.util.List;
 
 /**
 
@@ -21,6 +21,9 @@ import java.util.List;
  Extends the AppCompatActivity class.
  */
 public class Documents extends AppCompatActivity {
+
+    private DocumentAdapter documentsAdapter;
+    private ShipmentModel selectedShipment;
 
     /**
      * Called when the activity is created.
@@ -31,6 +34,7 @@ public class Documents extends AppCompatActivity {
      *
      * @param savedInstanceState The saved instance state of the activity.
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,23 +42,21 @@ public class Documents extends AppCompatActivity {
 
         Button addDocumentButton = findViewById(R.id.new_document);
 
-        ShipmentModel selectedShipment = (ShipmentModel) getIntent().getSerializableExtra("selectedShipment");
+        selectedShipment = (ShipmentModel) getIntent().getSerializableExtra("selectedShipment");
 
         List<DocumentModel> documents = selectedShipment.getDocuments();
 
-        DocumentAdapter documentsAdapter = new DocumentAdapter(Documents.this, R.layout.activity_document_item, documents);
+        documentsAdapter = new DocumentAdapter(Documents.this, R.layout.activity_document_item, documents);
 
         ListView documentsListView = findViewById(R.id.documents_list_view);
         documentsListView.setAdapter(documentsAdapter);
-
 
         // helper function
         documentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                DocumentModel selectedShipment = documents.get(position);
-                System.out.println("item clicked on positon" + position);
+                DocumentModel selectedDocument = documents.get(position);
+                System.out.println("item clicked on position " + position);
             }
         });
 
@@ -63,8 +65,14 @@ public class Documents extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Documents.this, NewDocument.class);
                 intent.putExtra("selectedShipment", selectedShipment);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
+

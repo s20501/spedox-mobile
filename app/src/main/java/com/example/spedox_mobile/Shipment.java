@@ -70,11 +70,9 @@ public class Shipment extends AppCompatActivity {
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                            // Pobierz kliknięty element z listy i przekaż do nowego widoku
                             ShipmentModel selectedShipment = originalList.get(position);
                             Log.d("LIST_CLICK", "Item clicked at position: " + position);
 
-                            // Przenieś do nowego widoku i przekaż dane wybranego elementu
                             Intent intent = new Intent(Shipment.this, ShipmentDetails.class);
                             intent.putExtra("selectedShipment", selectedShipment);
                             startActivity(intent);
