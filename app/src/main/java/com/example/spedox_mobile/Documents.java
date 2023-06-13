@@ -1,3 +1,4 @@
+
 package com.example.spedox_mobile;
 
 import android.content.Context;
@@ -14,10 +15,25 @@ import com.example.spedox_mobile.models.ShipmentModel;
 
 import java.util.List;
 
+/**
+
+ Represents an activity for displaying a list of documents.
+ Extends the AppCompatActivity class.
+ */
 public class Documents extends AppCompatActivity {
 
     private DocumentAdapter documentsAdapter;
     private ShipmentModel selectedShipment;
+
+    /**
+     * Called when the activity is created.
+     * Initializes the activity and sets the content view to the layout resource file.
+     * Retrieves the selected shipment from the intent extras.
+     * Sets up the document list view and handles item click events.
+     * Sets up the "Add Document" button and handles its click event to start the NewDocument activity.
+     *
+     * @param savedInstanceState The saved instance state of the activity.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +51,7 @@ public class Documents extends AppCompatActivity {
         ListView documentsListView = findViewById(R.id.documents_list_view);
         documentsListView.setAdapter(documentsAdapter);
 
+        // helper function
         documentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -56,8 +73,6 @@ public class Documents extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-
     }
 }
 

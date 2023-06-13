@@ -22,12 +22,24 @@ import retrofit2.Retrofit;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
 
+ Represents an activity for displaying shipment list.
+ Extends the AppCompatActivity class.
+ */
 public class Shipment extends AppCompatActivity {
     ListView listView;
     Retrofit retrofit = ApiManager.getRetrofitInstance();
     ShippingServiceApi shippingService = retrofit.create(ShippingServiceApi.class);
 
+    /**
+     * Called when the activity is created.
+     * Initializes the activity and sets the content view to the layout resource file.
+     * Retrieves a reference to the ListView used to display shipments.
+     * Calls the method to fetch and display all shipments.
+     *
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +48,14 @@ public class Shipment extends AppCompatActivity {
         getAllShipments();
 
     }
-
+    /**
+     * Called when the activity is created.
+     * Initializes the activity and sets the content view to the layout resource file.
+     * Retrieves a reference to the ListView used to display shipments.
+     * Calls the method to fetch and display all shipments.
+     *
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     private void getAllShipments() {
         Call<List<ShipmentModel>> call = shippingService.getAllShipments("Bearer " + getToken());
         call.enqueue(new Callback<List<ShipmentModel>>() {
@@ -75,7 +94,11 @@ public class Shipment extends AppCompatActivity {
 
 
 
-
+    /**
+     * Retrieves the authentication token from shared preferences.
+     *
+     * @return The authentication token if found, or null if not found.
+     */
         private String getToken() {
             SharedPreferences preferences = getSharedPreferences("MY_APP_PREFS", Context.MODE_PRIVATE);
             return preferences.getString("AUTH_TOKEN", null);

@@ -88,8 +88,6 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
             Uri selectedImageUri = data.getData();
 
             String selectedShipmentId = selectedShipment.getId();
-            //DocumentTypeEnum selectedDocumentType = DocumentTypeEnum.valueOf(selectedValue);
-            //String selectedValue = "INVOICE";
             File file = new File(getRealPathFromUri(selectedImageUri));
 
             DocumentRestModel documentRestModel = new DocumentRestModel();

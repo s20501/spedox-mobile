@@ -10,9 +10,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.spedox_mobile.models.ShipmentModel;
 
+/**
+
+ Represents an activity for displaying shipment details.
+ Extends the AppCompatActivity class.
+ */
 public class ShipmentDetails extends AppCompatActivity {
 
-
+    /**
+     * Called when the activity is created.
+     * Initializes the activity and sets the content view to the layout resource file.
+     * Retrieves references to various TextViews used to display shipment details.
+     * Retrieves the selected shipment object passed from the previous activity.
+     * Formats and displays the shipment details in the corresponding TextViews.
+     * Sets up a click listener for the "Documents" button to navigate to the Documents activity.
+     *
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +52,8 @@ public class ShipmentDetails extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
         customerName.setText(selectedShipment.getClientModel().getName());
-//        shipper.setText(selectedShipment.getShipper().getName());
-//        consignee.setText(selectedShipment.getConsignee().getName());
+        shipper.setText(selectedShipment.getShipper().getName());
+        consignee.setText(selectedShipment.getConsignee().getName());
         status.setText(selectedShipment.getStatus().status.toUpperCase());
         icotermDetails.setText(selectedShipment.getIcoterms().icoTermenum.toUpperCase());
         blNumberDetails.setText(selectedShipment.getBlNumber());
