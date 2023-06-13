@@ -121,7 +121,8 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        selectedValue = (String) parent.getItemAtPosition(position);
+        selectedValue = DocumentTypeEnum.values()[position].toString();
+
     }
 
     @Override
@@ -139,8 +140,6 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
             Uri selectedImageUri = data.getData();
 
             String selectedShipmentId = selectedShipment.getId();
-            //DocumentTypeEnum selectedDocumentType = DocumentTypeEnum.valueOf(selectedValue);
-            String selectedValue = "INVOICE";
             File file = new File(getRealPathFromUri(selectedImageUri));
 
 
@@ -170,8 +169,6 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
                     // Do something with the image file here
                     Uri selectedImageUri = data.getData();
                     String selectedShipmentId = selectedShipment.getId();
-                    //DocumentTypeEnum selectedDocumentType = DocumentTypeEnum.valueOf(selectedValue);
-                    String selectedValue = "INVOICE";
                     RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(selectedImageUri)), imageFile);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
                     RequestBody shipmentId = RequestBody.create(MediaType.parse("text/plain"), selectedShipmentId);
