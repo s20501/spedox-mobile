@@ -90,10 +90,6 @@ public class Shipment extends AppCompatActivity {
             }
         });
     }
-
-
-
-
     /**
      * Retrieves the authentication token from shared preferences.
      *
