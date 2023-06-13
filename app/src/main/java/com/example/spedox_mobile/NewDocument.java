@@ -3,21 +3,36 @@ package com.example.spedox_mobile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
+import android.Manifest;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+
+
 import android.os.Bundle;
+
 import com.example.spedox_mobile.conf.ApiManager;
 import com.example.spedox_mobile.enums.DocumentTypeEnum;
 import com.example.spedox_mobile.models.DocumentRestModel;
 import com.example.spedox_mobile.models.ShipmentModel;
 import com.example.spedox_mobile.services.DocumentServiceApi;
+
 import org.apache.commons.io.FilenameUtils;
 
 import okhttp3.MediaType;
@@ -27,9 +42,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.Part;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class NewDocument extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -38,6 +58,11 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
     private Spinner spinner;
     private ArrayAdapter<String> spinnerAdapter;
     private TextView photoName;
+    private static final int REQUEST_CAMERA_PERMISSION = 200;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private Button btnOpenCamera;
+    private ImageView imageView;
 
     private ShipmentModel selectedShipment;
     private DocumentServiceApi documentService;
@@ -53,6 +78,22 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
         photoName = findViewById(R.id.photo_name);
 
         spinner = findViewById(R.id.spinner);
+
+        btnOpenCamera = findViewById(R.id.btnOpenCamera);
+        imageView = findViewById(R.id.imageView);
+
+        btnOpenCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(NewDocument.this, Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    openCamera();
+                } else {
+                    ActivityCompat.requestPermissions(NewDocument.this, new String[]{Manifest.permission.CAMERA},
+                            REQUEST_CAMERA_PERMISSION);
+                }
+            }
+        });
 
         DocumentTypeEnum[] values = DocumentTypeEnum.getAllValues();
 
@@ -70,6 +111,13 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
     }
 
     String selectedValue;
+
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -95,43 +143,90 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
             String selectedValue = "INVOICE";
             File file = new File(getRealPathFromUri(selectedImageUri));
 
-            DocumentRestModel documentRestModel = new DocumentRestModel();
-
-            documentRestModel.setFile(file);
-            documentRestModel.setShipmentId(selectedShipmentId);
-            documentRestModel.setType(selectedValue);
 
             RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(selectedImageUri)), file);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
             RequestBody shipmentId = RequestBody.create(MediaType.parse("text/plain"), selectedShipmentId);
             RequestBody type = RequestBody.create(MediaType.parse("text/plain"), selectedValue);
 
-            Call<String> call = documentService.addDocument(body, shipmentId, type, "Bearer " + getToken());
+            makeRequest(body,shipmentId,type);
 
-            call.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if (response.isSuccessful()) {
-                        String result = response.body();
-                        System.out.println(result);
-                    } else {
-                        System.out.println(documentRestModel.getShipmentId());
-                        System.out.println(documentRestModel.getFile().toString());
-
-                        System.out.println();
-                        System.out.println(response.code());
-                        System.out.println(response.body());
-                        System.out.println(response.errorBody().toString());
-                        System.out.println("else: " + response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    System.out.println(t.getMessage().toString());
-                }
-            });
         }
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            // Save the image to a file
+            File imageFile = null;
+            try {
+                imageFile = createImageFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if (imageFile != null) {
+                try (FileOutputStream outputStream = new FileOutputStream(imageFile)) {
+                    imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                    // Do something with the image file here
+                    Uri selectedImageUri = data.getData();
+                    String selectedShipmentId = selectedShipment.getId();
+                    //DocumentTypeEnum selectedDocumentType = DocumentTypeEnum.valueOf(selectedValue);
+                    String selectedValue = "INVOICE";
+                    RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(selectedImageUri)), imageFile);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
+                    RequestBody shipmentId = RequestBody.create(MediaType.parse("text/plain"), selectedShipmentId);
+                    RequestBody type = RequestBody.create(MediaType.parse("text/plain"), selectedValue);
+
+                    makeRequest(body,shipmentId,type);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void makeRequest(
+            MultipartBody.Part body,
+            RequestBody shipmentId,
+            RequestBody type) {
+        Call<String> call = documentService.addDocument(body, shipmentId, type, "Bearer " + getToken());
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    String result = response.body();
+                    System.out.println(result);
+                } else {
+
+
+                    System.out.println();
+                    System.out.println(response.code());
+                    System.out.println(response.body());
+                    System.out.println(response.errorBody().toString());
+                    System.out.println("else: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                System.out.println(t.getMessage().toString());
+            }
+        });
+
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File imageFile = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        return imageFile;
     }
 
     public void selectImageFromGallery(View view) {
@@ -163,8 +258,6 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
         }
         return filePath;
     }
-
-
 
 
 }
