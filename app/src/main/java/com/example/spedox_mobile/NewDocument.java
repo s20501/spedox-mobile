@@ -42,15 +42,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.Part;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Date;
 import java.util.Locale;
-import java.util.UUID;
 
 public class NewDocument extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -167,9 +164,8 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
                 try (FileOutputStream outputStream = new FileOutputStream(imageFile)) {
                     imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                     // Do something with the image file here
-                    Uri selectedImageUri = data.getData();
                     String selectedShipmentId = selectedShipment.getId();
-                    RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(selectedImageUri)), imageFile);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageFile);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
                     RequestBody shipmentId = RequestBody.create(MediaType.parse("text/plain"), selectedShipmentId);
                     RequestBody type = RequestBody.create(MediaType.parse("text/plain"), selectedValue);
