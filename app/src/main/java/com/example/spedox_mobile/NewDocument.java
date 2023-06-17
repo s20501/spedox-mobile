@@ -11,14 +11,10 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
+import android.widget.*;
 import android.Manifest;
+import android.widget.Toast;
 
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -49,6 +45,12 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 
+
+/**
+ Represents an activity for creating a new document.
+ This activity allows the user to capture or select an image, specify the document type, and upload it to a server.
+ The document is associated with a selected shipment.
+ */
 public class NewDocument extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static final int REQUEST_CODE_SELECT_IMAGE = 100;
@@ -64,6 +66,14 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
     private ShipmentModel selectedShipment;
     private DocumentServiceApi documentService;
 
+
+    /**
+     * Initializes the activity and sets up the UI components.
+     * Retrieves the selected shipment and initializes the document service API.
+     * Sets up the spinner for selecting the document type.
+     * Sets up the button click listener for opening the camera.
+     * @param savedInstanceState The saved instance state bundle.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,17 +126,38 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
         }
     }
 
+
+    /**
+     * Handles the item selection event of the spinner.
+     * Updates the selected document value based on the selected item.
+     * @param parent The AdapterView where the selection happened.
+     * @param view The view within the AdapterView that was clicked.
+     * @param position The position of the view in the adapter.
+     * @param id The row id of the item that is selected.
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         selectedValue = DocumentTypeEnum.values()[position].toString();
-
     }
 
+    /**
+     * Handles the event when no item is selected in the spinner.
+     * @param parent The AdapterView that now contains no selected item.
+     */
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
+    /**
+     * Handles the result of the camera or gallery image selection.
+     * Retrieves the selected shipment and performs different actions based on the request code and result.
+     * If an image is selected from the gallery, it is uploaded to the server.
+     * If an image is captured with the camera, it is saved to a file and then uploaded to the server.
+     * @param requestCode The integer request code originally supplied to startActivityForResult().
+     * @param resultCode The integer result code returned by the child activity through its setResult().
+     * @param data An Intent that carries the result data.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -146,7 +177,7 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
             RequestBody type = RequestBody.create(MediaType.parse("text/plain"), selectedValue);
 
             makeRequest(body,shipmentId,type);
-
+            Toast.makeText(getApplicationContext(), "Dokument zostal dodany", Toast.LENGTH_LONG).show();
         }
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -169,8 +200,9 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
                     MultipartBody.Part body = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
                     RequestBody shipmentId = RequestBody.create(MediaType.parse("text/plain"), selectedShipmentId);
                     RequestBody type = RequestBody.create(MediaType.parse("text/plain"), selectedValue);
-
                     makeRequest(body,shipmentId,type);
+                    Toast.makeText(getApplicationContext(), "Dokument zostal dodany", Toast.LENGTH_LONG).show();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -178,6 +210,14 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
         }
     }
 
+    /**
+     * Sends a request to the server to add a new document.
+     * The request includes the document file, shipment ID, and document type.
+     * The result of the request is handled in the callback methods.
+     * @param body The document file as a MultipartBody.Part object.
+     * @param shipmentId The shipment ID as a RequestBody object.
+     * @param type The document type as a RequestBody object.
+     */
     private void makeRequest(
             MultipartBody.Part body,
             RequestBody shipmentId,
@@ -190,14 +230,10 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
                 if (response.isSuccessful()) {
                     String result = response.body();
                     System.out.println(result);
+
                 } else {
-
-
-                    System.out.println();
                     System.out.println(response.code());
                     System.out.println(response.body());
-                    System.out.println(response.errorBody().toString());
-                    System.out.println("else: " + response.message());
                 }
             }
 
@@ -208,7 +244,13 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
         });
 
     }
-
+    /**
+     * Creates a file to save the captured image.
+     * The file name is based on the current timestamp.
+     * The file is saved in the app's external files directory.
+     * @return The created image file.
+     * @throws IOException if an I/O error occurs.
+     */
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -222,22 +264,30 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
         return imageFile;
     }
 
+    /**
+     * Opens the gallery to select an image.
+     * @param view The view that triggered the event (button click).
+     */
     public void selectImageFromGallery(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
     }
 
-    private String getFileNameFromUri(Uri uri) {
-        String filePath = uri.getPath();
-        String fileName = FilenameUtils.getName(filePath);
-        return fileName;
-    }
 
+    /**
+     * Retrieves the authentication token from the shared preferences.
+     * @return The authentication token or null if not found.
+     */
     private String getToken() {
         SharedPreferences preferences = getSharedPreferences("MY_APP_PREFS", Context.MODE_PRIVATE);
         return preferences.getString("AUTH_TOKEN", null);
     }
 
+    /**
+     * Retrieves the real file path from the provided image URI.
+     * @param uri The URI of the selected image.
+     * @return The real file path of the image.
+     */
     private String getRealPathFromUri(Uri uri) {
         String filePath = null;
         String[] projection = {MediaStore.Images.Media.DATA};
@@ -251,8 +301,4 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
         }
         return filePath;
     }
-
-
-
-
 }
