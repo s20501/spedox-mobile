@@ -9,6 +9,9 @@ import java.io.Serializable;
  * This class holds information about shipmeny client.
  */
 public class ClientModel implements Serializable {
+    public ClientModel() {
+
+    }
 
     @SerializedName("id")
     private Long id;
