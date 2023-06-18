@@ -22,12 +22,23 @@ import retrofit2.Retrofit;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+
+ Represents the Documents activity in the Spedox Mobile application.
+ This activity allows users to view and manage documents associated with a shipment.
+ */
 public class Documents extends AppCompatActivity {
 
     private DocumentAdapter documentsAdapter;
     private ShipmentModel selectedShipment;
     private List<DocumentModel> documents = new ArrayList<>();
 
+    /**
+     * Called when the activity is created.
+     * Initializes the layout, sets click listeners, and retrieves shipment documents.
+     *
+     * @param savedInstanceState The saved instance state bundle.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +70,14 @@ public class Documents extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Called when the activity receives a result from another activity.
+     * Handles the result of creating a new document.
+     *
+     * @param requestCode The request code passed to startActivityForResult().
+     * @param resultCode  The result code returned by the child activity.
+     * @param data        An Intent that carries the result data.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -67,13 +85,19 @@ public class Documents extends AppCompatActivity {
             getAllShipments();
         }
     }
-
+    /**
+     * Called when the activity resumes.
+     * Retrieves shipment documents.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         getAllShipments();
     }
-
+    /**
+     * Retrieves all shipments and their associated documents from the server.
+     * Updates the document list and refreshes the adapter.
+     */
     private void getAllShipments() {
         Retrofit retrofit = ApiManager.getRetrofitInstance();
         ShippingServiceApi shippingService = retrofit.create(ShippingServiceApi.class);
@@ -105,6 +129,11 @@ public class Documents extends AppCompatActivity {
         });
     }
 
+    /**
+     * Retrieves the authentication token from shared preferences.
+     *
+     * @return The authentication token.
+     */
     private String getToken() {
         SharedPreferences preferences = getSharedPreferences("MY_APP_PREFS", Context.MODE_PRIVATE);
         return preferences.getString("AUTH_TOKEN", null);
