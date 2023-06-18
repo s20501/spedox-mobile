@@ -11,6 +11,9 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
+/**
+ Document service
+ */
 public interface DocumentServiceApi {
     @Multipart
     @POST("api/document/new")

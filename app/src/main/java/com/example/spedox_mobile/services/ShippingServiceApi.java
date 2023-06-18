@@ -7,6 +7,9 @@ import retrofit2.http.Header;
 
 import java.util.List;
 
+/**
+ Shipping service
+ */
 public interface ShippingServiceApi {
     @GET("api/shipment/all")
     Call<List<ShipmentModel>> getAllShipments(@Header("Authorization")String authToken);
