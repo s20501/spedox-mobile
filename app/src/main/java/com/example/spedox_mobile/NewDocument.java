@@ -128,7 +128,7 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
 
 
     /**
-     * Handles the item selection event of the spinner.
+     * Handles the item selection 
      * Updates the selected document value based on the selected item.
      * @param parent The AdapterView where the selection happened.
      * @param view The view within the AdapterView that was clicked.
@@ -141,7 +141,7 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
     }
 
     /**
-     * Handles the event when no item is selected in the spinner.
+     * Handles the event when no item is selected .
      * @param parent The AdapterView that now contains no selected item.
      */
     @Override
@@ -246,8 +246,6 @@ public class NewDocument extends AppCompatActivity implements AdapterView.OnItem
     }
     /**
      * Creates a file to save the captured image.
-     * The file name is based on the current timestamp.
-     * The file is saved in the app's external files directory.
      * @return The created image file.
      * @throws IOException if an I/O error occurs.
      */
